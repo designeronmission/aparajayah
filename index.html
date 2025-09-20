@@ -51,21 +51,7 @@
                 </button>
             </div>
         </div>
-        <!-- End Header Top Area  -->
-        <div id="my_switcher" class="my_switcher">
-            <ul>
-                <li>
-                    <a href="javascript: void(0);" data-theme="light" class="setColor light">
-                        <img src="images/sun-01.svg" alt="Sun images"><span title="Light Mode"> Light</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" data-theme="dark" class="setColor dark">
-                        <img src="images/vector.svg" alt="Vector Images"><span title="Dark Mode"> Dark</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+     
 
         <!-- Start Header Area  -->
         <header class="Aparajayah-header header-default header-transparent header-sticky">
@@ -366,12 +352,13 @@
                             <h1 class="title display-one">Transform Your Business with
                                 <br> <span class="header-caption">
                                     <span class="cd-headline rotate-1">
-                                        <span class="cd-words-wrapper"
-                                            style="width: auto;">
-                                            <b class="theme-gradient is-visible">Technology Solutions</b>
-                                            <b class="theme-gradient is-hidden">Digital Integration</b>
-                                            <b class="theme-gradient is-hidden">Cloud Platforms</b>
-                                        </span>
+                                        <span class="cd-words-wrapper" style="width: auto;">
+                                           
+                                            <b class="theme-gradient is-visible"> Software as a Services</b>
+                                            <b class="theme-gradient is-hidden"> Platform as a Services</b>
+                                            <b class="theme-gradient is-hidden"> Fintech as a Services</b>
+                                            <b class="theme-gradient is-hidden"> Banking as a Services</b>
+                                        </span> 
                                     </span>
                                 </span>
                             </h1>
@@ -390,13 +377,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-11 col-xl-11 justify-content-center">
-                        <div class="slider-frame">
-                            <img class="slider-image-effect shape-dark" src="img/banner.jpg"
-                                alt="Banner Images">
-                            <img class="slider-image-effect shape-light" src="images/slider-main-image_1.png"
-                                alt="Banner Images" style="width: 1055px; height: 897px;">
-                        </div>
+                    <div class="justify-content-center">
+                               <div class="container-main">
+            <div class="vd-cnt" id="videoContainer">
+                <video id="backgroundVideo" autoplay muted loop>
+                    <source src="img/banner.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="controls">
+                    <button id="playBtn"><i class="fas fa-play"></i></button>
+                    <button id="pauseBtn"><i class="fas fa-pause"></i></button>
+                    <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
+                    <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+        
+
                     </div>
                 </div>
             </div>
@@ -407,49 +404,7 @@
         </div>
         <!-- End Slider Area  -->
 
-        <!-- Start Brand Area -->
-        <div class="Aparajayah-brand-area Aparajayah-section-gap">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title rating-title text-center sal-animate" data-sal="slide-up"
-                            data-sal-duration="700" data-sal-delay="100">
-                            <p class="b1 mb--0 small-title">TRUSTED BY 100+ ENTERPRISES AND FINANCIAL INSTITUTIONS</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12 mt--10">
-                        <ul class="brand-list brand-style-2 slider-brand slider-brand-activation">
-                            <li class="slide-single-layout"><a href="#"><img src="images/strapi.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/mapbox.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/stenciljs.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/spotify.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/woocommerce.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/slack.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/strapi.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/mapbox.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/stenciljs.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/spotify.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/woocommerce.png"
-                                        alt="Brand Image"></a></li>
-                            <li class="slide-single-layout"><a href="#"><img src="images/slack.png"
-                                        alt="Brand Image"></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Start Tab__Style--one Area  -->
         <div class="Aparajayah-service-area Aparajayah-section-gap">
@@ -1444,47 +1399,49 @@
         </div>
         <!-- End Testimonial Area  -->
 
-        <!-- Start Brand Area -->
+
+
+                <!-- Start Brand Area -->
         <div class="Aparajayah-brand-area Aparajayah-section-gap">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-title rating-title text-center sal-animate" data-sal="slide-up"
                             data-sal-duration="700" data-sal-delay="100">
-                            <div class="rating">
-                                <a href="#rating">
-                                    <i class="fa-sharp fa-solid fa-star"></i>
-                                </a>
-                                <a href="#rating">
-                                    <i class="fa-sharp fa-solid fa-star"></i>
-                                </a>
-                                <a href="#rating">
-                                    <i class="fa-sharp fa-solid fa-star"></i>
-                                </a>
-                                <a href="#rating">
-                                    <i class="fa-sharp fa-solid fa-star"></i>
-                                </a>
-                                <a href="#rating">
-                                    <i class="fa-sharp fa-solid fa-star"></i>
-                                </a>
-                            </div>
-                            <p class="subtitle mb--0">Based on 20,000+ reviews on</p>
+                            <p class="b1 mb--0 small-title">TRUSTED BY 100+ ENTERPRISES AND FINANCIAL INSTITUTIONS</p>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12 mt--10">
-                        <ul class="brand-list brand-style-2">
-                            <li><a href="#"><img src="images/brand-01.png" alt="Brand Image"></a></li>
-                            <li><a href="#"><img src="images/brand-02.png" alt="Brand Image"></a></li>
-                            <li><a href="#"><img src="images/brand-03.png" alt="Brand Image"></a></li>
-                            <li><a href="#"><img src="images/brand-04.png" alt="Brand Image"></a></li>
+                        <ul class="brand-list brand-style-2 slider-brand slider-brand-activation">
+                            <li class="slide-single-layout"><a href="#"><img src="images/strapi.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/mapbox.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/stenciljs.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/spotify.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/woocommerce.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/slack.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/strapi.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/mapbox.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/stenciljs.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/spotify.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/woocommerce.png"
+                                        alt="Brand Image"></a></li>
+                            <li class="slide-single-layout"><a href="#"><img src="images/slack.png"
+                                        alt="Brand Image"></a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="bg-shape-left">
-                <img src="images/bg-shape-two.png" alt="Bg shape">
             </div>
         </div>
 
@@ -1518,7 +1475,7 @@
                                 </div>
                                 <div class="content-right col-lg-4">
                                     <div class="img-right">
-                                        <img src="images/view-img.png" alt="Mobile View">
+                                        <img src="img/cta-robo.png" alt="Mobile View">
                                     </div>
                                 </div>
                                 <div class="bg-shape-one">

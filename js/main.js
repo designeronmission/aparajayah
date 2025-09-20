@@ -910,3 +910,73 @@ function generateAutoReply() {
 
 
 
+  // Add animation classes when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        const animatedElements = document.querySelectorAll('.animated');
+        animatedElements.forEach(el => {
+            el.style.opacity = 0;
+        });
+        
+        setTimeout(() => {
+            animatedElements.forEach(el => {
+                el.classList.add('animated');
+            });
+        }, 100);
+    });
+
+
+
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+            const videoContainer = document.getElementById('videoContainer');
+            const video = document.getElementById('backgroundVideo');
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const scrollThreshold = 200; // Pixels to scroll before expansion
+            
+            // Scroll event listener
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > scrollThreshold) {
+                    videoContainer.classList.add('expanded');
+                } else {
+                    videoContainer.classList.remove('expanded');
+                }
+            });
+            
+            // Play button
+            playBtn.addEventListener('click', function() {
+                video.play();
+            });
+            
+            // Pause button
+            pauseBtn.addEventListener('click', function() {
+                video.pause();
+            });
+            
+            // Mute button
+            let isMuted = true;
+            muteBtn.addEventListener('click', function() {
+                isMuted = !isMuted;
+                video.muted = isMuted;
+                muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            });
+            
+            // Fullscreen button
+            fullscreenBtn.addEventListener('click', function() {
+                if (videoContainer.requestFullscreen) {
+                    videoContainer.requestFullscreen();
+                } else if (videoContainer.webkitRequestFullscreen) {
+                    videoContainer.webkitRequestFullscreen();
+                } else if (videoContainer.msRequestFullscreen) {
+                    videoContainer.msRequestFullscreen();
+                }
+            });
+            
+            // Handle window resize for better responsiveness
+            window.addEventListener('resize', function() {
+                // Additional responsive handling can be added here if needed
+            });
+        });

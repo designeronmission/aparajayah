@@ -1,368 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sequential Hand Touch Scroll</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body, html {
-      height: 100%;
-      overflow-x: hidden;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-      background-attachment: fixed;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    
-    header {
-      text-align: center;
-      padding: 80px 20px 60px;
-      color: white;
-    }
-    
-    h1 {
-      font-size: 3.5rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    }
-    
-    .subtitle {
-      font-size: 1.5rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    .scroll-section {
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hand {
-      position: absolute;
-      width: 30%;
-      max-width: 400px;
-      transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
-      z-index: 10;
-    }
-    
-    .left-hand {
-      left: -30%;
-      top: 50%;
-      transform: translateY(-50%) scale(0.8);
-    }
-    
-    .right-hand {
-      right: -30%;
-      top: 50%;
-      transform: translateY(-50%) scale(0.8);
-    }
-    
-    .left-zoomed {
-      left: 20%;
-      transform: translateY(-50%) scale(1.2);
-    }
-    
-    .right-zoomed {
-      right: 20%;
-      transform: translateY(-50%) scale(1.2);
-    }
-    
-    .touched {
-      left: 50%;
-      right: auto;
-      transform: translate(-50%, -50%) scale(1.1);
-    }
-    
-    .content-section {
-      position: relative;
-      z-index: 20;
-      background: white;
-      border-radius: 12px;
-      padding: 40px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-      margin: 40px 0;
-      opacity: 0;
-      transform: translateY(50px);
-      transition: all 1s ease-out;
-    }
-    
-    .content-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    .content-section h2 {
-      color: #1a2a6c;
-      margin-bottom: 25px;
-      font-weight: 600;
-    }
-    
-    .content-section p {
-      line-height: 1.8;
-      margin-bottom: 20px;
-      font-size: 1.1rem;
-    }
-    
-    .scroll-indicator {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      text-align: center;
-      font-size: 1rem;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 10px 20px;
-      border-radius: 20px;
-      animation: bounce 2s infinite;
-    }
-    
-    .progress-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.1);
-      z-index: 100;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #1a2a6c, #fdbb2d);
-      transition: width 0.2s ease;
-    }
-    
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
-      40% {transform: translateY(-20px) translateX(-50%);}
-      60% {transform: translateY(-10px) translateX(-50%);}
-    }
-    
-    @media (max-width: 992px) {
-      .hand {
-        width: 35%;
-      }
-      
-      .left-zoomed {
-        left: 15%;
-      }
-      
-      .right-zoomed {
-        right: 15%;
-      }
-    }
-    
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2.5rem;
-      }
-      
-      .subtitle {
-        font-size: 1.2rem;
-      }
-      
-      .hand {
-        width: 40%;
-      }
-      
-      .left-zoomed {
-        left: 10%;
-      }
-      
-      .right-zoomed {
-        right: 10%;
-      }
-      
-      .content-section {
-        padding: 25px;
-      }
-    }
-    
-    @media (max-width: 576px) {
-      .hand {
-        width: 60%;
-      }
-      
-      .left-zoomed {
-        left: 5%;
-      }
-      
-      .right-zoomed {
-        right: 5%;
-      }
-      
-      .touched {
-        transform: translate(-50%, -50%) scale(0.9);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Video Container</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #fff;
+            padding-top: 60px;
+            min-height: 200vh; /* To enable scrolling */
+            overflow-x: hidden;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+        }
+        
+        .header h1 {
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container-main {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .vd-cnt {
+            width: 1200px;
+            height: 675px; /* 16:9 aspect ratio */
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+            background: #000;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .vd-cnt video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .vd-cnt.expanded {
+            width: 1440px;
+            height: 810px; /* 16:9 aspect ratio */
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .controls button {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .controls button:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.1);
+        }
+        
+        .content-section {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .content-section h2 {
+            margin-bottom: 20px;
+            color: #ffdd40;
+        }
+        
+        .scroll-indicator {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            color: #ffdd40;
+            opacity: 0.9;
+        }
+        
+        .scroll-indicator i {
+            animation: bounce 1.5s infinite;
+            display: block;
+            margin-top: 10px;
+            font-size: 2rem;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-15px);}
+            60% {transform: translateY(-10px);}
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1500px) {
+            .vd-cnt {
+                width: 90%;
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+            
+            .vd-cnt.expanded {
+                width: 95%;
+                height: auto;
+                aspect-ratio: 16/9;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 20px;
+                margin: 40px 20px;
+            }
+            
+            .controls {
+                bottom: 10px;
+                padding: 8px 15px;
+            }
+            
+            .controls button {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="progress-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  
-  <div class="container">
-    <header>
-      <h1>Sequential Connection</h1>
-      <p class="subtitle">Scroll to see each hand approach and finally touch</p>
-    </header>
-    
-    <div class="scroll-section" id="scrollSection">
-      <!-- Left hand image (human hand) -->
-      <img src="img/robo.png" class="hand left-hand" id="leftHand" alt="Human Hand">
-      
-      <!-- Right hand image (robot hand) -->
-      <img src="img/hand.png" class="hand right-hand" id="rightHand" alt="Robot Hand">
+    <div class="container-fluid">
+        <div class="header">
+            <h1>Responsive Auto-Play Video Container</h1>
+            <p>Scroll down to see the video container expand from 1200px to 1440px</p>
+        </div>
+        
+        <div class="container-main">
+            <div class="vd-cnt" id="videoContainer">
+                <video id="backgroundVideo" autoplay muted loop>
+                    <source src="img/banner.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="controls">
+                    <button id="playBtn"><i class="fas fa-play"></i></button>
+                    <button id="pauseBtn"><i class="fas fa-pause"></i></button>
+                    <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
+                    <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <p>Scroll down to see the expansion effect</p>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+        
+        <div class="content-section">
+            <h2>About This Effect</h2>
+            <p>This page demonstrates a responsive video container that changes size when you scroll. The video container has the class name "vd-cnt" as requested.</p>
+            <p>When the page is loaded, the video container has a width of 1200px. As you scroll down, JavaScript detects the scroll position and expands the video container to 1440px width.</p>
+            <p>The video is set to auto-play in a loop with muted audio, similar to a banner video.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>How It Works</h2>
+            <p>The effect is achieved with a combination of:</p>
+            <ul>
+                <li>HTML5 video element with autoplay, loop, and muted attributes</li>
+                <li>CSS for styling and smooth transitions</li>
+                <li>JavaScript to handle the scroll event and video controls</li>
+                <li>Bootstrap for responsive layout</li>
+            </ul>
+            <p>Try resizing your browser window to see how the layout adapts to different screen sizes while maintaining the aspect ratio of the video.</p>
+        </div>
+        
+        <div class="content-section">
+            <h2>Video Controls</h2>
+            <p>Use the control buttons at the bottom of the video player to:</p>
+            <ul>
+                <li>Play/pause the video</li>
+                <li>Mute/unmute the audio</li>
+                <li>Toggle fullscreen mode</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>Created with HTML, CSS, JavaScript and Bootstrap</p>
+        </div>
     </div>
-    
-    <div class="scroll-indicator" id="scrollIndicator">
-      Scroll down to begin
-    </div>
-    
-    <div class="content-section" id="content1">
-      <h2>The Power of Connection</h2>
-      <p>In a world where technology continues to advance at an unprecedented pace, the human touch remains an essential element of our existence. This demonstration symbolizes the meeting point between humanity and innovation.</p>
-      <p>As you scrolled, you witnessed how two separate entities can come together, bridging gaps and creating something new. This parallels how technology should enhance human connection rather than replace it.</p>
-    </div>
-    
-    <div class="content-section" id="content2">
-      <h2>Technology with a Human Touch</h2>
-      <p>True innovation considers the human experience at its core. The most successful technologies are those that understand our needs, emotions, and desires.</p>
-      <p>From responsive design to intuitive interfaces, the goal is always to create technology that feels like a natural extension of ourselves.</p>
-    </div>
-    
-    <div class="content-section" id="content3">
-      <h2>Join the Conversation</h2>
-      <p>What does the intersection of humanity and technology mean to you? How can we ensure that technological advancement enhances rather than diminishes our human connections?</p>
-      <p>These are critical questions for our time. We invite you to reflect on how you experience this balance in your daily life.</p>
-    </div>
-  </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const leftHand = document.getElementById('leftHand');
-      const rightHand = document.getElementById('rightHand');
-      const scrollIndicator = document.getElementById('scrollIndicator');
-      const progressBar = document.getElementById('progressBar');
-      const contentSections = document.querySelectorAll('.content-section');
-      
-      let leftZoomed = false;
-      let rightZoomed = false;
-      let touched = false;
-      let scrollPosition = 0;
-      
-      window.addEventListener('scroll', function() {
-        // Update progress bar
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight - windowHeight;
-        const scrolled = window.scrollY;
-        const scrollPercent = (scrolled / documentHeight) * 100;
-        progressBar.style.width = scrollPercent + '%';
-        
-        // Get current scroll position
-        const newScrollPosition = window.scrollY;
-        const scrollDirection = newScrollPosition > scrollPosition ? 'down' : 'up';
-        scrollPosition = newScrollPosition;
-        
-        // Calculate trigger points
-        const triggerPoint1 = windowHeight * 0.2;
-        const triggerPoint2 = windowHeight * 0.5;
-        const triggerPoint3 = windowHeight * 0.8;
-        
-        if (scrollDirection === 'down') {
-          // Scrolling down
-          if (scrolled > triggerPoint1 && !leftZoomed) {
-            // Zoom in left hand
-            leftHand.classList.add('left-zoomed');
-            scrollIndicator.textContent = "Scroll further to bring in the other hand";
-            leftZoomed = true;
-          }
-          
-          if (scrolled > triggerPoint2 && leftZoomed && !rightZoomed) {
-            // Zoom in right hand
-            rightHand.classList.add('right-zoomed');
-            scrollIndicator.textContent = "Almost touching...";
-            rightZoomed = true;
-          }
-          
-          if (scrolled > triggerPoint3 && leftZoomed && rightZoomed && !touched) {
-            // Hands touch
-            leftHand.classList.remove('left-zoomed');
-            rightHand.classList.remove('right-zoomed');
-            leftHand.classList.add('touched');
-            rightHand.classList.add('touched');
-            scrollIndicator.textContent = "Connection made! Continue scrolling for content";
-            touched = true;
-          }
-          
-          // Show content sections as we continue scrolling
-          if (scrolled > windowHeight * 1.2) {
-            document.getElementById('content1').classList.add('content-visible');
-          }
-          if (scrolled > windowHeight * 1.8) {
-            document.getElementById('content2').classList.add('content-visible');
-          }
-          if (scrolled > windowHeight * 2.4) {
-            document.getElementById('content3').classList.add('content-visible');
-            scrollIndicator.style.opacity = '0';
-          }
-        } else {
-          // Scrolling up - reverse the animation
-          if (scrolled < triggerPoint3 && touched) {
-            leftHand.classList.remove('touched');
-            rightHand.classList.remove('touched');
-            leftHand.classList.add('left-zoomed');
-            rightHand.classList.add('right-zoomed');
-            scrollIndicator.textContent = "Almost touching...";
-            scrollIndicator.style.opacity = '1';
-            touched = false;
-          }
-          
-          if (scrolled < triggerPoint2 && rightZoomed) {
-            rightHand.classList.remove('right-zoomed');
-            scrollIndicator.textContent = "Scroll further to bring in the other hand";
-            rightZoomed = false;
-          }
-          
-          if (scrolled < triggerPoint1 && leftZoomed) {
-            leftHand.classList.remove('left-zoomed');
-            scrollIndicator.textContent = "Scroll down to begin";
-            leftZoomed = false;
-          }
-          
-          // Hide content sections when scrolling up
-          if (scrolled < windowHeight * 2.4) {
-            document.getElementById('content3').classList.remove('content-visible');
-          }
-          if (scrolled < windowHeight * 1.8) {
-            document.getElementById('content2').classList.remove('content-visible');
-          }
-          if (scrolled < windowHeight * 1.2) {
-            document.getElementById('content1').classList.remove('content-visible');
-          }
-        }
-      });
-    });
-  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const videoContainer = document.getElementById('videoContainer');
+            const video = document.getElementById('backgroundVideo');
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const muteBtn = document.getElementById('muteBtn');
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            const scrollThreshold = 200; // Pixels to scroll before expansion
+            
+            // Scroll event listener
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > scrollThreshold) {
+                    videoContainer.classList.add('expanded');
+                } else {
+                    videoContainer.classList.remove('expanded');
+                }
+            });
+            
+            // Play button
+            playBtn.addEventListener('click', function() {
+                video.play();
+            });
+            
+            // Pause button
+            pauseBtn.addEventListener('click', function() {
+                video.pause();
+            });
+            
+            // Mute button
+            let isMuted = true;
+            muteBtn.addEventListener('click', function() {
+                isMuted = !isMuted;
+                video.muted = isMuted;
+                muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            });
+            
+            // Fullscreen button
+            fullscreenBtn.addEventListener('click', function() {
+                if (videoContainer.requestFullscreen) {
+                    videoContainer.requestFullscreen();
+                } else if (videoContainer.webkitRequestFullscreen) {
+                    videoContainer.webkitRequestFullscreen();
+                } else if (videoContainer.msRequestFullscreen) {
+                    videoContainer.msRequestFullscreen();
+                }
+            });
+            
+            // Handle window resize for better responsiveness
+            window.addEventListener('resize', function() {
+                // Additional responsive handling can be added here if needed
+            });
+        });
+    </script>
 </body>
 </html>
