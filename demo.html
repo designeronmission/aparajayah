@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sequential Hand Touch Scroll</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body, html {
+      height: 100%;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      background-attachment: fixed;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      text-align: center;
+      padding: 80px 20px 60px;
+      color: white;
+    }
+    
+    h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .subtitle {
+      font-size: 1.5rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .scroll-section {
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hand {
+      position: absolute;
+      width: 30%;
+      max-width: 400px;
+      transition: all 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+      filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
+      z-index: 10;
+    }
+    
+    .left-hand {
+      left: -30%;
+      top: 50%;
+      transform: translateY(-50%) scale(0.8);
+    }
+    
+    .right-hand {
+      right: -30%;
+      top: 50%;
+      transform: translateY(-50%) scale(0.8);
+    }
+    
+    .left-zoomed {
+      left: 20%;
+      transform: translateY(-50%) scale(1.2);
+    }
+    
+    .right-zoomed {
+      right: 20%;
+      transform: translateY(-50%) scale(1.2);
+    }
+    
+    .touched {
+      left: 50%;
+      right: auto;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+    
+    .content-section {
+      position: relative;
+      z-index: 20;
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin: 40px 0;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s ease-out;
+    }
+    
+    .content-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .content-section h2 {
+      color: #1a2a6c;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+    
+    .content-section p {
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+    
+    .scroll-indicator {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      text-align: center;
+      font-size: 1rem;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px 20px;
+      border-radius: 20px;
+      animation: bounce 2s infinite;
+    }
+    
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 100;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1a2a6c, #fdbb2d);
+      transition: width 0.2s ease;
+    }
+    
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+      40% {transform: translateY(-20px) translateX(-50%);}
+      60% {transform: translateY(-10px) translateX(-50%);}
+    }
+    
+    @media (max-width: 992px) {
+      .hand {
+        width: 35%;
+      }
+      
+      .left-zoomed {
+        left: 15%;
+      }
+      
+      .right-zoomed {
+        right: 15%;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .hand {
+        width: 40%;
+      }
+      
+      .left-zoomed {
+        left: 10%;
+      }
+      
+      .right-zoomed {
+        right: 10%;
+      }
+      
+      .content-section {
+        padding: 25px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .hand {
+        width: 60%;
+      }
+      
+      .left-zoomed {
+        left: 5%;
+      }
+      
+      .right-zoomed {
+        right: 5%;
+      }
+      
+      .touched {
+        transform: translate(-50%, -50%) scale(0.9);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  
+  <div class="container">
+    <header>
+      <h1>Sequential Connection</h1>
+      <p class="subtitle">Scroll to see each hand approach and finally touch</p>
+    </header>
+    
+    <div class="scroll-section" id="scrollSection">
+      <!-- Left hand image (human hand) -->
+      <img src="img/robo.png" class="hand left-hand" id="leftHand" alt="Human Hand">
+      
+      <!-- Right hand image (robot hand) -->
+      <img src="img/hand.png" class="hand right-hand" id="rightHand" alt="Robot Hand">
+    </div>
+    
+    <div class="scroll-indicator" id="scrollIndicator">
+      Scroll down to begin
+    </div>
+    
+    <div class="content-section" id="content1">
+      <h2>The Power of Connection</h2>
+      <p>In a world where technology continues to advance at an unprecedented pace, the human touch remains an essential element of our existence. This demonstration symbolizes the meeting point between humanity and innovation.</p>
+      <p>As you scrolled, you witnessed how two separate entities can come together, bridging gaps and creating something new. This parallels how technology should enhance human connection rather than replace it.</p>
+    </div>
+    
+    <div class="content-section" id="content2">
+      <h2>Technology with a Human Touch</h2>
+      <p>True innovation considers the human experience at its core. The most successful technologies are those that understand our needs, emotions, and desires.</p>
+      <p>From responsive design to intuitive interfaces, the goal is always to create technology that feels like a natural extension of ourselves.</p>
+    </div>
+    
+    <div class="content-section" id="content3">
+      <h2>Join the Conversation</h2>
+      <p>What does the intersection of humanity and technology mean to you? How can we ensure that technological advancement enhances rather than diminishes our human connections?</p>
+      <p>These are critical questions for our time. We invite you to reflect on how you experience this balance in your daily life.</p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const leftHand = document.getElementById('leftHand');
+      const rightHand = document.getElementById('rightHand');
+      const scrollIndicator = document.getElementById('scrollIndicator');
+      const progressBar = document.getElementById('progressBar');
+      const contentSections = document.querySelectorAll('.content-section');
+      
+      let leftZoomed = false;
+      let rightZoomed = false;
+      let touched = false;
+      let scrollPosition = 0;
+      
+      window.addEventListener('scroll', function() {
+        // Update progress bar
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight - windowHeight;
+        const scrolled = window.scrollY;
+        const scrollPercent = (scrolled / documentHeight) * 100;
+        progressBar.style.width = scrollPercent + '%';
+        
+        // Get current scroll position
+        const newScrollPosition = window.scrollY;
+        const scrollDirection = newScrollPosition > scrollPosition ? 'down' : 'up';
+        scrollPosition = newScrollPosition;
+        
+        // Calculate trigger points
+        const triggerPoint1 = windowHeight * 0.2;
+        const triggerPoint2 = windowHeight * 0.5;
+        const triggerPoint3 = windowHeight * 0.8;
+        
+        if (scrollDirection === 'down') {
+          // Scrolling down
+          if (scrolled > triggerPoint1 && !leftZoomed) {
+            // Zoom in left hand
+            leftHand.classList.add('left-zoomed');
+            scrollIndicator.textContent = "Scroll further to bring in the other hand";
+            leftZoomed = true;
+          }
+          
+          if (scrolled > triggerPoint2 && leftZoomed && !rightZoomed) {
+            // Zoom in right hand
+            rightHand.classList.add('right-zoomed');
+            scrollIndicator.textContent = "Almost touching...";
+            rightZoomed = true;
+          }
+          
+          if (scrolled > triggerPoint3 && leftZoomed && rightZoomed && !touched) {
+            // Hands touch
+            leftHand.classList.remove('left-zoomed');
+            rightHand.classList.remove('right-zoomed');
+            leftHand.classList.add('touched');
+            rightHand.classList.add('touched');
+            scrollIndicator.textContent = "Connection made! Continue scrolling for content";
+            touched = true;
+          }
+          
+          // Show content sections as we continue scrolling
+          if (scrolled > windowHeight * 1.2) {
+            document.getElementById('content1').classList.add('content-visible');
+          }
+          if (scrolled > windowHeight * 1.8) {
+            document.getElementById('content2').classList.add('content-visible');
+          }
+          if (scrolled > windowHeight * 2.4) {
+            document.getElementById('content3').classList.add('content-visible');
+            scrollIndicator.style.opacity = '0';
+          }
+        } else {
+          // Scrolling up - reverse the animation
+          if (scrolled < triggerPoint3 && touched) {
+            leftHand.classList.remove('touched');
+            rightHand.classList.remove('touched');
+            leftHand.classList.add('left-zoomed');
+            rightHand.classList.add('right-zoomed');
+            scrollIndicator.textContent = "Almost touching...";
+            scrollIndicator.style.opacity = '1';
+            touched = false;
+          }
+          
+          if (scrolled < triggerPoint2 && rightZoomed) {
+            rightHand.classList.remove('right-zoomed');
+            scrollIndicator.textContent = "Scroll further to bring in the other hand";
+            rightZoomed = false;
+          }
+          
+          if (scrolled < triggerPoint1 && leftZoomed) {
+            leftHand.classList.remove('left-zoomed');
+            scrollIndicator.textContent = "Scroll down to begin";
+            leftZoomed = false;
+          }
+          
+          // Hide content sections when scrolling up
+          if (scrolled < windowHeight * 2.4) {
+            document.getElementById('content3').classList.remove('content-visible');
+          }
+          if (scrolled < windowHeight * 1.8) {
+            document.getElementById('content2').classList.remove('content-visible');
+          }
+          if (scrolled < windowHeight * 1.2) {
+            document.getElementById('content1').classList.remove('content-visible');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
