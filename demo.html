@@ -3,307 +3,728 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Video Container</title>
+    <title>IT Services FAQ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary: #0d6efd;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --sidebar-bg: #1a1a1a;
+            --text-light: #f8f9fa;
+            --text-muted: #adb5bd;
+            --accent: #00b4d8;
+            --transition: all 0.3s ease;
         }
         
         body {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: #fff;
-            padding-top: 60px;
-            min-height: 200vh; /* To enable scrolling */
-            overflow-x: hidden;
+            line-height: 1.6;
         }
         
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
+        .header-section {
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 100%);
+            padding: 4rem 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 3rem;
         }
         
-        .header h1 {
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 10px;
+        .service-tag {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(13, 110, 253, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid rgba(13, 110, 253, 0.4);
         }
         
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .container-main {
-            width: 100%;
+        .main-container {
             display: flex;
-            justify-content: center;
-            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 2rem;
         }
         
-        .vd-cnt {
-            width: 1200px;
-            height: 675px; /* 16:9 aspect ratio */
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative;
-            background: #000;
-            border: 3px solid rgba(255, 255, 255, 0.1);
+        .sidebar {
+            flex: 0 0 280px;
+            background-color: var(--sidebar-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 2rem;
         }
         
-        .vd-cnt video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+        .faq-content {
+            flex: 1;
         }
         
-        .vd-cnt.expanded {
-            width: 1440px;
-            height: 810px; /* 16:9 aspect ratio */
-            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
-            border: 3px solid rgba(255, 255, 255, 0.15);
+        .filter-group {
+            margin-bottom: 2rem;
         }
         
-        .controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 12px 20px;
-            border-radius: 30px;
-            backdrop-filter: blur(5px);
+        .filter-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            border-bottom: 1px solid #333;
+            padding-bottom: 0.5rem;
         }
         
-        .controls button {
-            background: rgba(255, 255, 255, 0.15);
-            border: none;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            color: white;
-            font-size: 18px;
+        .filter-options {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .filter-option {
+            padding: 0.7rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             display: flex;
             align-items: center;
-            justify-content: center;
         }
         
-        .controls button:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.1);
+        .filter-option:hover {
+            background-color: rgba(255, 255, 255, 0.05);
         }
         
-        .content-section {
-            max-width: 800px;
-            margin: 60px auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .filter-option.active {
+            background-color: rgba(13, 110, 253, 0.2);
+            border-left: 3px solid var(--primary);
         }
         
-        .content-section h2 {
-            margin-bottom: 20px;
-            color: #ffdd40;
-        }
-        
-        .scroll-indicator {
+        .filter-option i {
+            margin-right: 0.8rem;
+            width: 20px;
             text-align: center;
-            margin-top: 30px;
+        }
+        
+        .faq-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #333;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .faq-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .faq-header {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .faq-icon {
+            color: var(--accent);
+            transition: var(--transition);
             font-size: 1.2rem;
-            color: #ffdd40;
-            opacity: 0.9;
         }
         
-        .scroll-indicator i {
-            animation: bounce 1.5s infinite;
-            display: block;
-            margin-top: 10px;
-            font-size: 2rem;
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
         }
         
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-            40% {transform: translateY(-15px);}
-            60% {transform: translateY(-10px);}
+        .faq-card.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
         }
         
-        .footer {
+        .faq-card.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .search-box {
+            background-color: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 50px;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .service-highlight {
+            border-left: 3px solid var(--accent);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        
+        .faq-group {
+            margin-bottom: 2.5rem;
+        }
+        
+        .group-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+            color: var(--accent);
+        }
+        
+        .no-results {
             text-align: center;
-            padding: 30px;
-            margin-top: 60px;
-            background: rgba(0, 0, 0, 0.2);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            color: var(--text-muted);
+            display: none;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 1500px) {
-            .vd-cnt {
-                width: 90%;
-                height: auto;
-                aspect-ratio: 16/9;
+        .reset-filters {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .reset-filters:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        @media (max-width: 992px) {
+            .main-container {
+                flex-direction: column;
             }
             
-            .vd-cnt.expanded {
-                width: 95%;
-                height: auto;
-                aspect-ratio: 16/9;
+            .sidebar {
+                position: static;
+                margin-bottom: 2rem;
             }
         }
         
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
+            .header-section {
+                padding: 2rem 0;
             }
             
-            .header p {
+            .faq-header {
+                padding: 1rem;
+            }
+            
+            .faq-question {
                 font-size: 1rem;
-            }
-            
-            .content-section {
-                padding: 20px;
-                margin: 40px 20px;
-            }
-            
-            .controls {
-                bottom: 10px;
-                padding: 8px 15px;
-            }
-            
-            .controls button {
-                width: 40px;
-                height: 40px;
-                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="header">
-            <h1>Responsive Auto-Play Video Container</h1>
-            <p>Scroll down to see the video container expand from 1200px to 1440px</p>
-        </div>
-        
-        <div class="container-main">
-            <div class="vd-cnt" id="videoContainer">
-                <video id="backgroundVideo" autoplay muted loop>
-                    <source src="img/banner.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-                <div class="controls">
-                    <button id="playBtn"><i class="fas fa-play"></i></button>
-                    <button id="pauseBtn"><i class="fas fa-pause"></i></button>
-                    <button id="muteBtn"><i class="fas fa-volume-up"></i></button>
-                    <button id="fullscreenBtn"><i class="fas fa-expand"></i></button>
+    <!-- Header Section -->
+    <div class="header-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="display-5 fw-bold">IT Services FAQ</h1>
+                    <p class="lead">Find answers to common questions about our cloud services and solutions.</p>
+                    <div class="mt-3">
+                        <span class="service-tag">PaaS</span>
+                        <span class="service-tag">IaaS</span>
+                        <span class="service-tag">FaaS</span>
+                        <span class="service-tag">IMaaS</span>
+                        <span class="service-tag">BaaS</span>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <i class="fas fa-cloud fa-5x text-primary opacity-50"></i>
                 </div>
             </div>
         </div>
-        
-        <div class="scroll-indicator">
-            <p>Scroll down to see the expansion effect</p>
-            <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container main-container">
+        <!-- Sidebar with Filters -->
+        <div class="sidebar">
+            <div class="filter-group">
+                <h3 class="filter-title">Service Categories</h3>
+                <ul class="filter-options">
+                    <li class="filter-option active" data-filter="all">
+                        <i class="fas fa-layer-group"></i> All Services
+                    </li>
+                    <li class="filter-option" data-filter="paas">
+                        <i class="fas fa-server"></i> Platform as a Service (PaaS)
+                    </li>
+                    <li class="filter-option" data-filter="iaas">
+                        <i class="fas fa-network-wired"></i> Infrastructure as a Service (IaaS)
+                    </li>
+                    <li class="filter-option" data-filter="faas">
+                        <i class="fas fa-bolt"></i> Function as a Service (FaaS)
+                    </li>
+                    <li class="filter-option" data-filter="imaas">
+                        <i class="fas fa-database"></i> Information Management as a Service (IMaaS)
+                    </li>
+                    <li class="filter-option" data-filter="baas">
+                        <i class="fas fa-cogs"></i> Backend as a Service (BaaS)
+                    </li>
+                    <li class="filter-option" data-filter="general">
+                        <i class="fas fa-shield-alt"></i> General & Security
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="filter-group">
+                <h3 class="filter-title">Question Type</h3>
+                <ul class="filter-options">
+                    <li class="filter-option active" data-type="all">
+                        <i class="fas fa-question-circle"></i> All Questions
+                    </li>
+                    <li class="filter-option" data-type="technical">
+                        <i class="fas fa-code"></i> Technical
+                    </li>
+                    <li class="filter-option" data-type="pricing">
+                        <i class="fas fa-dollar-sign"></i> Pricing
+                    </li>
+                    <li class="filter-option" data-type="security">
+                        <i class="fas fa-lock"></i> Security
+                    </li>
+                </ul>
+            </div>
+            
+            <button class="reset-filters">
+                <i class="fas fa-redo"></i> Reset All Filters
+            </button>
         </div>
-        
-        <div class="content-section">
-            <h2>About This Effect</h2>
-            <p>This page demonstrates a responsive video container that changes size when you scroll. The video container has the class name "vd-cnt" as requested.</p>
-            <p>When the page is loaded, the video container has a width of 1200px. As you scroll down, JavaScript detects the scroll position and expands the video container to 1440px width.</p>
-            <p>The video is set to auto-play in a loop with muted audio, similar to a banner video.</p>
-        </div>
-        
-        <div class="content-section">
-            <h2>How It Works</h2>
-            <p>The effect is achieved with a combination of:</p>
-            <ul>
-                <li>HTML5 video element with autoplay, loop, and muted attributes</li>
-                <li>CSS for styling and smooth transitions</li>
-                <li>JavaScript to handle the scroll event and video controls</li>
-                <li>Bootstrap for responsive layout</li>
-            </ul>
-            <p>Try resizing your browser window to see how the layout adapts to different screen sizes while maintaining the aspect ratio of the video.</p>
-        </div>
-        
-        <div class="content-section">
-            <h2>Video Controls</h2>
-            <p>Use the control buttons at the bottom of the video player to:</p>
-            <ul>
-                <li>Play/pause the video</li>
-                <li>Mute/unmute the audio</li>
-                <li>Toggle fullscreen mode</li>
-            </ul>
-        </div>
-        
-        <div class="footer">
-            <p>Created with HTML, CSS, JavaScript and Bootstrap</p>
+
+        <!-- FAQ Content -->
+        <div class="faq-content">
+            <!-- Search Box -->
+            <div class="row mb-4">
+                <div class="col-md-8 mx-auto">
+                    <input type="text" class="search-box" placeholder="Search for questions or keywords...">
+                </div>
+            </div>
+
+            <!-- FAQ Items -->
+            <div class="faq-items">
+                <!-- PaaS Group -->
+                <div class="faq-group" data-category="paas">
+                    <h2 class="group-title"><i class="fas fa-server"></i> Platform as a Service (PaaS)</h2>
+                    
+                    <div class="faq-card" data-category="paas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What is Platform as a Service (PaaS) and how does it differ from traditional hosting?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Platform as a Service (PaaS) provides a complete development and deployment environment in the cloud. Unlike traditional hosting where you manage the underlying infrastructure, PaaS allows developers to focus solely on building applications without worrying about servers, storage, or networking.</p>
+                            <div class="service-highlight">
+                                <p><strong>Key advantages:</strong> Faster time to market, reduced operational complexity, automatic scaling, and built-in development tools.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="paas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What programming languages and frameworks are supported by your PaaS solution?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our PaaS supports a wide range of programming languages including Java, Python, Node.js, Ruby, PHP, Go, and .NET. We also provide support for popular frameworks like Spring Boot, Django, Express.js, Ruby on Rails, and Laravel.</p>
+                            <p>Additionally, we offer container support for custom runtime environments, allowing you to deploy applications using Docker containers.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="paas" data-type="pricing">
+                        <div class="faq-header">
+                            <h3 class="faq-question">How is pricing calculated for PaaS services?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our PaaS pricing is based on a combination of factors including compute resources, memory allocation, storage capacity, and outbound data transfer. We offer tiered pricing plans suitable for development, testing, and production environments.</p>
+                            <p>You can start with our free tier for small projects and scale up as your needs grow. Detailed pricing information is available in our pricing calculator.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IaaS Group -->
+                <div class="faq-group" data-category="iaas">
+                    <h2 class="group-title"><i class="fas fa-network-wired"></i> Infrastructure as a Service (IaaS)</h2>
+                    
+                    <div class="faq-card" data-category="iaas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">How does Infrastructure as a Service (IaaS) provide more control than other cloud models?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>IaaS gives you the highest level of control among cloud service models. You manage the operating systems, storage, deployed applications, and networking components, while we handle the physical hardware.</p>
+                            <div class="service-highlight">
+                                <p><strong>IaaS is ideal for:</strong> Companies needing full control over their infrastructure, organizations with specific compliance requirements, and businesses running custom applications that aren't compatible with PaaS environments.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="iaas" data-type="security">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What security measures are in place for your IaaS offerings?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our IaaS security follows a shared responsibility model. We secure the underlying infrastructure including physical data centers, network, and hypervisors. You're responsible for securing your operating systems, applications, and data.</p>
+                            <p>We provide advanced security features like DDoS protection, network firewalls, encryption at rest and in transit, identity and access management, and security monitoring tools.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="iaas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What types of virtual machines and configurations are available?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer a wide range of VM configurations optimized for different workloads:</p>
+                            <ul>
+                                <li><strong>General purpose:</strong> Balanced CPU-to-memory ratio</li>
+                                <li><strong>Compute optimized:</strong> High CPU performance</li>
+                                <li><strong>Memory optimized:</strong> High memory-to-CPU ratio</li>
+                                <li><strong>Storage optimized:</strong> High disk throughput</li>
+                                <li><strong>GPU instances:</strong> For graphic-intensive workloads</li>
+                            </ul>
+                            <p>All VMs can be customized based on your specific requirements.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FaaS Group -->
+                <div class="faq-group" data-category="faas">
+                    <h2 class="group-title"><i class="fas fa-bolt"></i> Function as a Service (FaaS)</h2>
+                    
+                    <div class="faq-card" data-category="faas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What are the main benefits of using Function as a Service (FaaS) for application development?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>FaaS, or serverless computing, offers several key benefits:</p>
+                            <ul>
+                                <li><strong>Cost efficiency:</strong> You only pay for the compute time you consume</li>
+                                <li><strong>Automatic scaling:</strong> Functions scale automatically with demand</li>
+                                <li><strong>Reduced operational overhead:</strong> No server management required</li>
+                                <li><strong>Faster development:</strong> Focus on code rather than infrastructure</li>
+                            </ul>
+                            <p>FaaS is perfect for event-driven applications, APIs, and processing tasks that have variable workloads.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="faas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What execution environments and runtimes are supported for serverless functions?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our FaaS platform supports multiple programming languages including Node.js, Python, Java, Go, Ruby, and .NET Core. You can also bring custom runtimes using container images.</p>
+                            <p>Each function execution is isolated in a secure environment with configurable memory allocation (128MB to 10GB) and timeout settings (up to 15 minutes).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMaaS Group -->
+                <div class="faq-group" data-category="imaas">
+                    <h2 class="group-title"><i class="fas fa-database"></i> Information Management as a Service (IMaaS)</h2>
+                    
+                    <div class="faq-card" data-category="imaas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">How does Information Management as a Service (IMaaS) help with data governance?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our IMaaS solutions provide comprehensive data governance capabilities including:</p>
+                            <ul>
+                                <li>Data classification and cataloging</li>
+                                <li>Policy management and enforcement</li>
+                                <li>Data lineage tracking</li>
+                                <li>Access controls and audit trails</li>
+                                <li>Compliance reporting for regulations like GDPR, HIPAA, and CCPA</li>
+                            </ul>
+                            <p>This ensures your data is managed consistently across the organization while meeting regulatory requirements.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="imaas" data-type="security">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What data encryption and protection measures are implemented?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We implement multiple layers of data protection:</p>
+                            <ul>
+                                <li>Encryption at rest using AES-256</li>
+                                <li>Encryption in transit with TLS 1.2+</li>
+                                <li>Key management with customer-controlled keys</li>
+                                <li>Data masking and tokenization options</li>
+                                <li>Automated backup and point-in-time recovery</li>
+                            </ul>
+                            <p>All security measures are compliant with industry standards and certifications.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BaaS Group -->
+                <div class="faq-group" data-category="baas">
+                    <h2 class="group-title"><i class="fas fa-cogs"></i> Backend as a Service (BaaS)</h2>
+                    
+                    <div class="faq-card" data-category="baas" data-type="technical">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What backend functionalities are included in your Backend as a Service (BaaS) offering?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our BaaS provides a comprehensive set of backend services that mobile and web developers can integrate via APIs, including:</p>
+                            <ul>
+                                <li>User authentication and management</li>
+                                <li>Cloud storage and databases</li>
+                                <li>Push notifications</li>
+                                <li>Social media integration</li>
+                                <li>Analytics and monitoring</li>
+                                <li>Serverless cloud functions</li>
+                            </ul>
+                            <p>This allows frontend developers to build full-featured applications without backend development expertise.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="baas" data-type="pricing">
+                        <div class="faq-header">
+                            <h3 class="faq-question">How is BaaS pricing structured?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>BaaS pricing is based on usage metrics including:</p>
+                            <ul>
+                                <li>Number of monthly active users</li>
+                                <li>API calls and data transfer</li>
+                                <li>Storage consumption</li>
+                                <li>Push notifications sent</li>
+                            </ul>
+                            <p>We offer a generous free tier for development and small projects, with transparent pricing as you scale.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- General Group -->
+                <div class="faq-group" data-category="general">
+                    <h2 class="group-title"><i class="fas fa-shield-alt"></i> General & Security</h2>
+                    
+                    <div class="faq-card" data-category="general" data-type="security">
+                        <div class="faq-header">
+                            <h3 class="faq-question">How do you ensure high availability and disaster recovery across your service offerings?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We employ a multi-layered approach to ensure high availability:</p>
+                            <ul>
+                                <li>Geographically distributed data centers with automatic failover</li>
+                                <li>99.9% uptime SLA for all services</li>
+                                <li>Automated backups with point-in-time recovery</li>
+                                <li>Real-time replication across availability zones</li>
+                                <li>Comprehensive monitoring and alerting systems</li>
+                            </ul>
+                            <p>Our disaster recovery plans are regularly tested to ensure business continuity in case of major incidents.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-card" data-category="general" data-type="pricing">
+                        <div class="faq-header">
+                            <h3 class="faq-question">What pricing models do you offer for your cloud services?</h3>
+                            <span class="faq-icon"><i class="fas fa-chevron-down"></i></span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>We offer flexible pricing models to suit different business needs:</p>
+                            <ul>
+                                <li><strong>Pay-as-you-go:</strong> Ideal for variable workloads with no long-term commitment</li>
+                                <li><strong>Reserved instances:</strong> Significant discounts for predictable, steady-state workloads</li>
+                                <li><strong>Spot pricing:</strong> Up to 90% discount for interruptible workloads</li>
+                                <li><strong>Enterprise agreements:</strong> Custom pricing for large-scale deployments</li>
+                            </ul>
+                            <p>All our services include a free tier for testing and development purposes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results">
+                <i class="fas fa-search fa-3x mb-3"></i>
+                <h3>No matching questions found</h3>
+                <p>Try adjusting your filters or search terms</p>
+            </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container">
+            <p>© 2023 IT Services Company. All rights reserved.</p>
+            <p class="text-muted">Need more help? <a href="#" class="text-decoration-none">Contact our support team</a></p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const videoContainer = document.getElementById('videoContainer');
-            const video = document.getElementById('backgroundVideo');
-            const playBtn = document.getElementById('playBtn');
-            const pauseBtn = document.getElementById('pauseBtn');
-            const muteBtn = document.getElementById('muteBtn');
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            const scrollThreshold = 200; // Pixels to scroll before expansion
+            // FAQ toggle functionality
+            const faqHeaders = document.querySelectorAll('.faq-header');
             
-            // Scroll event listener
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > scrollThreshold) {
-                    videoContainer.classList.add('expanded');
+            faqHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const faqCard = this.parentElement;
+                    faqCard.classList.toggle('active');
+                });
+            });
+            
+            // Filter functionality
+            const filterOptions = document.querySelectorAll('.filter-option');
+            const searchBox = document.querySelector('.search-box');
+            const resetButton = document.querySelector('.reset-filters');
+            const noResults = document.querySelector('.no-results');
+            
+            let activeCategory = 'all';
+            let activeType = 'all';
+            let searchTerm = '';
+            
+            // Initialize filters
+            function applyFilters() {
+                const faqCards = document.querySelectorAll('.faq-card');
+                const faqGroups = document.querySelectorAll('.faq-group');
+                
+                let visibleCount = 0;
+                let visibleGroups = new Set();
+                
+                faqCards.forEach(card => {
+                    const category = card.getAttribute('data-category');
+                    const type = card.getAttribute('data-type');
+                    const question = card.querySelector('.faq-question').textContent.toLowerCase();
+                    const answer = card.querySelector('.faq-answer').textContent.toLowerCase();
+                    
+                    const categoryMatch = activeCategory === 'all' || category === activeCategory;
+                    const typeMatch = activeType === 'all' || type === activeType;
+                    const searchMatch = searchTerm === '' || 
+                        question.includes(searchTerm) || 
+                        answer.includes(searchTerm);
+                    
+                    if (categoryMatch && typeMatch && searchMatch) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                        // Add the group this card belongs to
+                        const group = card.closest('.faq-group');
+                        if (group) visibleGroups.add(group);
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Show/hide groups based on whether they have visible cards
+                faqGroups.forEach(group => {
+                    if (visibleGroups.has(group)) {
+                        group.style.display = 'block';
+                    } else {
+                        group.style.display = 'none';
+                    }
+                });
+                
+                // Show no results message if no cards are visible
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
                 } else {
-                    videoContainer.classList.remove('expanded');
+                    noResults.style.display = 'none';
                 }
+            }
+            
+            // Category filter
+            document.querySelectorAll('.filter-option[data-filter]').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update active state
+                    document.querySelectorAll('.filter-option[data-filter]').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update active category
+                    activeCategory = this.getAttribute('data-filter');
+                    applyFilters();
+                });
             });
             
-            // Play button
-            playBtn.addEventListener('click', function() {
-                video.play();
+            // Type filter
+            document.querySelectorAll('.filter-option[data-type]').forEach(option => {
+                option.addEventListener('click', function() {
+                    // Update active state
+                    document.querySelectorAll('.filter-option[data-type]').forEach(opt => {
+                        opt.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update active type
+                    activeType = this.getAttribute('data-type');
+                    applyFilters();
+                });
             });
             
-            // Pause button
-            pauseBtn.addEventListener('click', function() {
-                video.pause();
+            // Search functionality
+            searchBox.addEventListener('input', function() {
+                searchTerm = this.value.toLowerCase();
+                applyFilters();
             });
             
-            // Mute button
-            let isMuted = true;
-            muteBtn.addEventListener('click', function() {
-                isMuted = !isMuted;
-                video.muted = isMuted;
-                muteBtn.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            // Reset filters
+            resetButton.addEventListener('click', function() {
+                // Reset category filter
+                document.querySelectorAll('.filter-option[data-filter]').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                document.querySelector('.filter-option[data-filter="all"]').classList.add('active');
+                activeCategory = 'all';
+                
+                // Reset type filter
+                document.querySelectorAll('.filter-option[data-type]').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                document.querySelector('.filter-option[data-type="all"]').classList.add('active');
+                activeType = 'all';
+                
+                // Clear search
+                searchBox.value = '';
+                searchTerm = '';
+                
+                // Apply filters
+                applyFilters();
             });
             
-            // Fullscreen button
-            fullscreenBtn.addEventListener('click', function() {
-                if (videoContainer.requestFullscreen) {
-                    videoContainer.requestFullscreen();
-                } else if (videoContainer.webkitRequestFullscreen) {
-                    videoContainer.webkitRequestFullscreen();
-                } else if (videoContainer.msRequestFullscreen) {
-                    videoContainer.msRequestFullscreen();
-                }
-            });
-            
-            // Handle window resize for better responsiveness
-            window.addEventListener('resize', function() {
-                // Additional responsive handling can be added here if needed
-            });
+            // Initialize with all FAQs visible
+            applyFilters();
         });
     </script>
 </body>
